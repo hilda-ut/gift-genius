@@ -1,4 +1,4 @@
-import { GiftIdea } from "@/_components/gift-card/GiftCard";
+import { GiftIdea } from "@/_types/giftIdea";
 
 export const giftDatabase: GiftIdea[] = [
   {

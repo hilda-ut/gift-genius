@@ -14,19 +14,17 @@ interface GiftCardProps {
 
 const GiftCard = ({ gift }: GiftCardProps) => {
   return (
-    <div className="overflow-hidden animate-pop bg-white border border-purple-200 hover:shadow-md transition-shadow rounded-lg border bg-card text-card-foreground shadow-sm">
-      <div className="aspect-video overflow-hidden relative">
-        <Image
-          fill
-          src={gift.imageUrl}
-          alt={gift.name}
-          className="w-full h-full object-cover transition-transform hover:scale-110"
-        />
+    <div className="overflow-hidden flex flex-col justify-between animate-pop bg-white border border-purple-200 hover:shadow-lg transition-shadow rounded-lg border shadow-sm">
+      <div className="aspect-[4/3] overflow-hidden relative">
+        <img src={gift.imageUrl} alt={gift.name} className="w-full h-auto hover:scale-110" />
+        {gift.category && (
+          <span className="absolute top-2 left-2 bg-purple-200 text-purple-700 text-xs px-2 py-1 rounded shadow">
+            {gift.category}
+          </span>
+        )}
       </div>
       <CardHeader>
-        <div className="flex justify-between items-start">
-          <CardTitle>{gift.name}</CardTitle>
-        </div>
+        <CardTitle>{gift.name}</CardTitle>
         <CardDescription>{gift.priceRange}</CardDescription>
       </CardHeader>
       <CardContent>

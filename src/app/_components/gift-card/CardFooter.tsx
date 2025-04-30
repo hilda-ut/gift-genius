@@ -6,7 +6,7 @@ React.HTMLAttributes<HTMLDivElement>
 >(({ ...props }, ref) => (
   <div
     ref={ref}
-    className="p-4 pt-0 flex items-center"
+    className="px-4 my-2 pb-2 flex items-center"
     {...props}
   />
 ));

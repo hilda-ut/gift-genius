@@ -1,5 +1,4 @@
 
-import Image from 'next/image';
 import { ExternalLink } from "lucide-react";
 import { GiftIdea } from '@/_types/giftIdea';
 import { CardContent } from './CardContent';

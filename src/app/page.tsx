@@ -1,11 +1,19 @@
 "use client"
 
 import { useState } from "react";
-import { Gift, RefreshCw } from "lucide-react";
+import { Toaster } from "sonner";
+import {
+  CircleCheckBig,
+  Gift,
+  Info,
+  LoaderCircle,
+  RefreshCw,
+  TriangleAlert,
+} from "lucide-react";
 import { GiftForm } from "@components/GiftForm";
 import { GiftIdea } from "./_types/giftIdea";
 import GiftCard from "./_components/gift-card/GiftCard";
-import { giftDatabase } from "./_utils/giftData";
+import { getAIGiftSuggestions } from "./_utils/aiGiftService";
 
 const Index = () => {
   const [giftSuggestions, setGiftSuggestions] = useState<GiftIdea[]>([]);
@@ -17,16 +25,23 @@ const Index = () => {
     priceRange: number[];
   } | null>(null);
 
-  const handleSubmit = (
+  const handleSubmit = async(
     age: string,
     interests: string,
     relationship: string,
     priceRange: number[]
-  ): void => {
+  ): Promise<void> => {
     setIsLoading(true);
 
     try {
-      setGiftSuggestions(giftDatabase);
+      const suggestions = await getAIGiftSuggestions(
+        age,
+        interests,
+        relationship,
+        priceRange,
+      );
+
+      setGiftSuggestions(suggestions);
       setCriteria({
         age,
         interests,
@@ -53,6 +68,15 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-purple-100 to-purple-50 px-4 py-12">
+      <Toaster
+        icons={{
+          success: <CircleCheckBig color="#0eaf46" />,
+          info: <TriangleAlert color="orange" />,
+          warning: <Info color="red" />,
+          error: <Info color="red" />,
+          loading: <LoaderCircle color="blue" />,
+        }}
+      />
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
           <div className="flex items-center justify-center mb-4">
@@ -72,7 +96,7 @@ const Index = () => {
           </div>
 
           <div className="lg:col-span-2">
-            {giftSuggestions.length > 0 ? (
+            {giftSuggestions?.length > 0 ? (
               <>
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-2xl font-bold text-gray-800">AI Gift Suggestions</h2>
@@ -96,6 +120,10 @@ const Index = () => {
               </>
             ) : (
               <div className="h-full flex items-center justify-center p-10 rounded-xl bg-purple-100 border border-purple-200">
+                {
+                  isLoading ? (
+                    <p>Loading</p>
+                  ) :
                 <div className="text-center">
                   <Gift className="h-16 w-16 text-purple-400 mx-auto mb-4" />
                   <h3 className="text-xl font-medium text-gray-700 mb-2">Looking for AI gift ideas?</h3>
@@ -103,6 +131,7 @@ const Index = () => {
                     Fill out the form with details about the recipient to get personalized AI gift suggestions.
                   </p>
                 </div>
+                }
               </div>
             )}
           </div>

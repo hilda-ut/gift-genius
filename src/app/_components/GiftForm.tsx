@@ -3,9 +3,10 @@
 import React, { useState } from 'react';
 import { Slider } from "radix-ui";
 import { Gift } from 'lucide-react';
+import { relationships } from '@/_utils/relationships';
 import { Input } from './Input';
 import { Label } from './Label';
-import { relationships } from '@/_utils/relationships';
+import Button from './ui/Button';
 
 interface Props {
   handleSubmit: (
@@ -97,12 +98,12 @@ export const GiftForm: React.FC<Props> = ({
           <Slider.Thumb className="block w-4 h-4 bg-purple-600 rounded-full" />
         </Slider.Root>
       </div>
-      <button
+      <Button
         type="submit"
-        className="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700"
+        className="w-full"
       >
         Get Gift Suggestions
-      </button>
+      </Button>
     </form>
   );
 };

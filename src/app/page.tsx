@@ -11,8 +11,9 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import { GiftForm } from "@components/GiftForm";
-import { GiftIdea } from "./_types/giftIdea";
+import Button from "./_components/ui/Button";
 import GiftCard from "./_components/gift-card/GiftCard";
+import { GiftIdea } from "./_types/giftIdea";
 import { getAIGiftSuggestions } from "./_utils/aiGiftService";
 
 const Index = () => {
@@ -106,14 +107,14 @@ const Index = () => {
                 <>
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold text-gray-800">AI Gift Suggestions</h2>
-                    <button
+                    <Button
                       onClick={handleRefresh}
-                      className="inline-flex items-center group bg-white rounded py-2 px-4 border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white"
+                      className="inline-flex items-center group"
                       disabled={isLoading}
                     >
-                      <RefreshCw className="h-4 w-4 mr-2 text-purple-700 group-hover:text-white" />
+                      <RefreshCw className="h-4 w-4 mr-2" />
                       New Ideas
-                    </button>
+                    </Button>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {giftSuggestions?.map((gift) => (

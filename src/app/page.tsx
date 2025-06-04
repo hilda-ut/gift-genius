@@ -96,34 +96,36 @@ const Index = () => {
           </div>
 
           <div className="lg:col-span-2">
-            {giftSuggestions?.length > 0 ? (
-              <>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-gray-800">AI Gift Suggestions</h2>
-                  <button
-                    onClick={handleRefresh}
-                    className="inline-flex items-center group bg-white rounded py-2 px-4 border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white"
-                    disabled={isLoading}
-                  >
-                    <RefreshCw className="h-4 w-4 mr-2 text-purple-700 group-hover:text-white" />
-                    New Ideas
-                  </button>
+            {
+              isLoading ? (
+                <div className="h-full flex items-center justify-center p-10 rounded-xl bg-purple-100 border border-purple-200">
+                  <p>Loading ...</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {giftSuggestions?.map((gift) => (
-                    <GiftCard
-                      key={gift.name}
-                      gift={gift}
-                    />
-                  ))}
-                </div>
-              </>
-            ) : (
+              ) :
+              giftSuggestions?.length > 0 ? (
+                <>
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-gray-800">AI Gift Suggestions</h2>
+                    <button
+                      onClick={handleRefresh}
+                      className="inline-flex items-center group bg-white rounded py-2 px-4 border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white"
+                      disabled={isLoading}
+                    >
+                      <RefreshCw className="h-4 w-4 mr-2 text-purple-700 group-hover:text-white" />
+                      New Ideas
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {giftSuggestions?.map((gift) => (
+                      <GiftCard
+                        key={gift.name}
+                        gift={gift}
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : (
               <div className="h-full flex items-center justify-center p-10 rounded-xl bg-purple-100 border border-purple-200">
-                {
-                  isLoading ? (
-                    <p>Loading</p>
-                  ) :
                 <div className="text-center">
                   <Gift className="h-16 w-16 text-purple-400 mx-auto mb-4" />
                   <h3 className="text-xl font-medium text-gray-700 mb-2">Looking for AI gift ideas?</h3>
@@ -131,7 +133,6 @@ const Index = () => {
                     Fill out the form with details about the recipient to get personalized AI gift suggestions.
                   </p>
                 </div>
-                }
               </div>
             )}
           </div>

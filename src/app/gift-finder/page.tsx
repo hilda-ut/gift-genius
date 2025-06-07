@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Toaster } from "sonner";
+import { useState } from 'react';
+import { Toaster } from 'sonner';
 import {
   CircleCheckBig,
   Gift,
@@ -9,12 +9,12 @@ import {
   LoaderCircle,
   RefreshCw,
   TriangleAlert,
-} from "lucide-react";
-import Button from "@/_components/ui/Button";
-import GiftCard from "@/_components/gift-card/GiftCard";
-import { GiftIdea } from "@/_types/giftIdea";
-import { getAIGiftSuggestions } from "@/_utils/aiGiftService";
-import { GiftForm } from "@/_components/gift-form/GiftForm";
+} from 'lucide-react';
+import Button from '@/_components/ui/Button';
+import GiftCard from '@/_components/gift-card/GiftCard';
+import { GiftIdea } from '@/_types/giftIdea';
+import { getAIGiftSuggestions } from '@/_utils/aiGiftService';
+import { GiftForm } from '@/_components/gift-form/GiftForm';
 
 export default function GiftFinder() {
   const [giftSuggestions, setGiftSuggestions] = useState<GiftIdea[]>([]);
@@ -30,7 +30,7 @@ export default function GiftFinder() {
     age: string,
     interests: string,
     relationship: string,
-    priceRange: number[]
+    priceRange: number[],
   ): Promise<void> => {
     setIsLoading(true);
 
@@ -47,10 +47,10 @@ export default function GiftFinder() {
         age,
         interests,
         relationship,
-        priceRange
+        priceRange,
       });
     } catch (error) {
-      console.error("Error getting gift suggestions:", error);
+      console.error('Error getting gift suggestions:', error);
     } finally {
       setIsLoading(false);
     }
@@ -63,7 +63,7 @@ export default function GiftFinder() {
       criteria.age,
       criteria.interests,
       criteria.relationship,
-      criteria.priceRange
+      criteria.priceRange,
     );
   };
 
@@ -106,39 +106,39 @@ export default function GiftFinder() {
                   </div>
                 </div>
               ) :
-              giftSuggestions?.length > 0 ? (
-                <>
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-gray-800">AI Gift Suggestions</h2>
-                    <Button
-                      onClick={handleRefresh}
-                      className="inline-flex items-center group"
-                      disabled={isLoading}
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      New Ideas
-                    </Button>
+                giftSuggestions?.length > 0 ? (
+                  <>
+                    <div className="flex justify-between items-center mb-6">
+                      <h2 className="text-2xl font-bold text-gray-800">AI Gift Suggestions</h2>
+                      <Button
+                        onClick={handleRefresh}
+                        className="inline-flex items-center group"
+                        disabled={isLoading}
+                      >
+                        <RefreshCw className="h-4 w-4 mr-2" />
+                        New Ideas
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      {giftSuggestions?.map((gift) => (
+                        <GiftCard
+                          key={gift.name}
+                          gift={gift}
+                        />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="h-full flex items-center justify-center p-10 rounded-xl bg-purple-100 border border-purple-200">
+                    <div className="text-center">
+                      <Gift className="h-16 w-16 text-purple-400 mx-auto mb-4" />
+                      <h3 className="text-xl font-medium text-gray-700 mb-2">Looking for AI gift ideas?</h3>
+                      <p className="text-gray-500">
+                        Fill out the form with details about the recipient to get personalized AI gift suggestions.
+                      </p>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {giftSuggestions?.map((gift) => (
-                      <GiftCard
-                        key={gift.name}
-                        gift={gift}
-                      />
-                    ))}
-                  </div>
-                </>
-              ) : (
-                <div className="h-full flex items-center justify-center p-10 rounded-xl bg-purple-100 border border-purple-200">
-                  <div className="text-center">
-                    <Gift className="h-16 w-16 text-purple-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-medium text-gray-700 mb-2">Looking for AI gift ideas?</h3>
-                    <p className="text-gray-500">
-                      Fill out the form with details about the recipient to get personalized AI gift suggestions.
-                    </p>
-                  </div>
-                </div>
-              )
+                )
             }
           </div>
         </div>

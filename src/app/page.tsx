@@ -1,30 +1,30 @@
-"use client"
+'use client';
 
-import Link from "next/link";
-import { Gift, Sparkles, Target, Heart, Clock } from "lucide-react";
-import Button from "@/_components/ui/Button";
+import Link from 'next/link';
+import { Clock, Gift, Heart, Sparkles, Target } from 'lucide-react';
+import Button from '@/_components/ui/Button';
 
 const features = [
   {
     icon: <Sparkles className="h-6 w-6 text-purple-500" />,
-    title: "Smart Suggestions",
-    description: "Our AI understands the art of thoughtful gifting"
+    title: 'Smart Suggestions',
+    description: 'Our AI understands the art of thoughtful gifting',
   },
   {
     icon: <Target className="h-6 w-6 text-sky-500" />,
-    title: "Perfect Match",
-    description: "Tailored to interests and personality"
+    title: 'Perfect Match',
+    description: 'Tailored to interests and personality',
   },
   {
     icon: <Clock className="h-6 w-6 text-emerald-500" />,
-    title: "Quick & Easy",
-    description: "Find the ideal gift in minutes, not hours"
+    title: 'Quick & Easy',
+    description: 'Find the ideal gift in minutes, not hours',
   },
   {
     icon: <Heart className="h-6 w-6 text-rose-500" />,
-    title: "From the Heart",
-    description: "Make every gift meaningful and personal"
-  }
+    title: 'From the Heart',
+    description: 'Make every gift meaningful and personal',
+  },
 ];
 
 export default function Home() {

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const CardTitle = React.forwardRef<
   HTMLParagraphElement,
@@ -11,4 +11,4 @@ export const CardTitle = React.forwardRef<
   />
 ));
 
-CardTitle.displayName = "CardTitle";
+CardTitle.displayName = 'CardTitle';

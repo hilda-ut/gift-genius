@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const CardFooter = React.forwardRef<
 HTMLDivElement,
@@ -11,4 +11,4 @@ React.HTMLAttributes<HTMLDivElement>
   />
 ));
 
-CardFooter.displayName = "CardFooter";
+CardFooter.displayName = 'CardFooter';

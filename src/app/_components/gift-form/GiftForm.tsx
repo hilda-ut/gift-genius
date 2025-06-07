@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
-import { Slider } from "radix-ui";
+import { Slider } from 'radix-ui';
 import { Gift } from 'lucide-react';
 import { relationships } from '@/_utils/relationships';
 import { Input } from '../ui/Input';
@@ -20,9 +20,9 @@ interface Props {
 export const GiftForm: React.FC<Props> = ({
   handleSubmit,
 }: Props) => {
-  const [age, setAge] = useState("");
-  const [interests, setInterests] = useState("");
-  const [relationship, setRelationship] = useState("");
+  const [age, setAge] = useState('');
+  const [interests, setInterests] = useState('');
+  const [relationship, setRelationship] = useState('');
   const [priceRange, setPriceRange] = useState<number[]>([20, 80]);
 
   const onSubmit = (event: React.FormEvent) => {
@@ -38,18 +38,18 @@ export const GiftForm: React.FC<Props> = ({
       </div>
 
       <div className="space-y-4">
-      <Label htmlFor="age">Recipient&apos;s Age</Label>
-      <Input
-        id="age"
-        type="number"
-        placeholder="e.g., 25"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
-      />
+        <Label htmlFor="age">Recipient&apos;s Age</Label>
+        <Input
+          id="age"
+          type="number"
+          placeholder="e.g., 25"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
       </div>
 
       <div className='space-y-4'>
-      <Label htmlFor="interests">Their Interests</Label>
+        <Label htmlFor="interests">Their Interests</Label>
         <Input
           id="interests"
           type="text"
@@ -79,11 +79,11 @@ export const GiftForm: React.FC<Props> = ({
           }
         </select>
       </div>
-        <div className='space-y-4'>
-          <div className="flex justify-between items-center">
-            <Label htmlFor="price-range">Price Range</Label>
-            <span className="text-sm font-medium text-gray-700">${priceRange[0]} - ${priceRange[1]}</span>
-          </div>
+      <div className='space-y-4'>
+        <div className="flex justify-between items-center">
+          <Label htmlFor="price-range">Price Range</Label>
+          <span className="text-sm font-medium text-gray-700">${priceRange[0]} - ${priceRange[1]}</span>
+        </div>
         <Slider.Root
           className="relative flex items-center w-full h-5"
           value={priceRange}

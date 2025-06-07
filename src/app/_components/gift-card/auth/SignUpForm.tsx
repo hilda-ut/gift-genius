@@ -6,7 +6,7 @@ const SignUpForm = () => {
         <input />
       </form>
     </>
-  )
+  );
 };
 
 export default SignUpForm;

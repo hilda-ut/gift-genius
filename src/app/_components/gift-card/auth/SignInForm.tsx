@@ -6,7 +6,7 @@ const SignInForm = () => {
         <input />
       </form>
     </>
-  )
+  );
 };
 
 export default SignInForm;

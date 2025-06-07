@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react';
 
 export const CardHeader = React.forwardRef<
   HTMLDivElement,
@@ -11,4 +11,4 @@ export const CardHeader = React.forwardRef<
   />
 ));
 
-CardHeader.displayName = "CardHeader";
+CardHeader.displayName = 'CardHeader';

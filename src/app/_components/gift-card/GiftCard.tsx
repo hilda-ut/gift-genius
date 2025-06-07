@@ -1,4 +1,3 @@
-
 import { ExternalLink } from "lucide-react";
 import { GiftIdea } from '@/_types/giftIdea';
 import { CardContent } from './CardContent';
@@ -31,13 +30,13 @@ const GiftCard = ({ gift }: GiftCardProps) => {
       </CardContent>
       <CardFooter>
         <a
-          href={`https://www.google.com/search?q=${encodeURIComponent(gift.name)}`}
+          href={gift.productUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="text-xs flex items-center text-purple-700 hover:underline"
         >
           <ExternalLink className="h-3 w-3 mr-1" />
-          Find Online
+          View Product
         </a>
       </CardFooter>
     </div>

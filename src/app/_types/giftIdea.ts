@@ -5,4 +5,5 @@ export interface GiftIdea {
   priceRange: string;
   category: string;
   imageUrl: string;
+  productUrl: string;
 }

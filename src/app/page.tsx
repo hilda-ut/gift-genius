@@ -10,7 +10,7 @@ import {
   RefreshCw,
   TriangleAlert,
 } from "lucide-react";
-import { GiftForm } from "@components/GiftForm";
+import { GiftForm } from "@/_components/gift-form/GiftForm";
 import Button from "./_components/ui/Button";
 import GiftCard from "./_components/gift-card/GiftCard";
 import { GiftIdea } from "./_types/giftIdea";

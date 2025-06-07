@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { Slider } from "radix-ui";
 import { Gift } from 'lucide-react';
 import { relationships } from '@/_utils/relationships';
-import { Input } from './Input';
-import { Label } from './Label';
-import Button from './ui/Button';
+import { Input } from '../ui/Input';
+import { Label } from '../ui/Label';
+import Button from '../ui/Button';
 
 interface Props {
   handleSubmit: (

@@ -1,146 +1,115 @@
 "use client"
 
-import { useState } from "react";
-import { Toaster } from "sonner";
-import {
-  CircleCheckBig,
-  Gift,
-  Info,
-  LoaderCircle,
-  RefreshCw,
-  TriangleAlert,
-} from "lucide-react";
-import { GiftForm } from "@/_components/gift-form/GiftForm";
-import Button from "./_components/ui/Button";
-import GiftCard from "./_components/gift-card/GiftCard";
-import { GiftIdea } from "./_types/giftIdea";
-import { getAIGiftSuggestions } from "./_utils/aiGiftService";
+import Link from "next/link";
+import { Gift, Sparkles, Target, Heart, Clock } from "lucide-react";
+import Button from "@/_components/ui/Button";
 
-const Index = () => {
-  const [giftSuggestions, setGiftSuggestions] = useState<GiftIdea[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [criteria, setCriteria] = useState<{
-    age: string;
-    interests: string;
-    relationship: string;
-    priceRange: number[];
-  } | null>(null);
+const features = [
+  {
+    icon: <Sparkles className="h-6 w-6 text-purple-500" />,
+    title: "Smart Suggestions",
+    description: "Our AI understands the art of thoughtful gifting"
+  },
+  {
+    icon: <Target className="h-6 w-6 text-sky-500" />,
+    title: "Perfect Match",
+    description: "Tailored to interests and personality"
+  },
+  {
+    icon: <Clock className="h-6 w-6 text-emerald-500" />,
+    title: "Quick & Easy",
+    description: "Find the ideal gift in minutes, not hours"
+  },
+  {
+    icon: <Heart className="h-6 w-6 text-rose-500" />,
+    title: "From the Heart",
+    description: "Make every gift meaningful and personal"
+  }
+];
 
-  const handleSubmit = async(
-    age: string,
-    interests: string,
-    relationship: string,
-    priceRange: number[]
-  ): Promise<void> => {
-    setIsLoading(true);
-
-    try {
-      const suggestions = await getAIGiftSuggestions(
-        age,
-        interests,
-        relationship,
-        priceRange,
-      );
-
-      setGiftSuggestions(suggestions);
-      setCriteria({
-        age,
-        interests,
-        relationship,
-        priceRange
-      });
-    } catch (error) {
-      console.error("Error getting gift suggestions:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleRefresh = (): void => {
-    if (!criteria) return;
-
-    handleSubmit(
-      criteria.age,
-      criteria.interests,
-      criteria.relationship,
-      criteria.priceRange
-    );
-  };
-
+export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-b from-purple-100 to-purple-50 px-4 py-12">
-      <Toaster
-        icons={{
-          success: <CircleCheckBig color="#0eaf46" />,
-          info: <TriangleAlert color="orange" />,
-          warning: <Info color="red" />,
-          error: <Info color="red" />,
-          loading: <LoaderCircle color="blue" />,
-        }}
-      />
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-10">
-          <div className="flex items-center justify-center mb-4">
-            <Gift className="h-12 w-12 text-purple-400 animate-float" />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
-            Gift Genuis
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover AI-powered gift suggestions for everyone in your life based on their age, interests, and your relationship.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          <div className="lg:col-span-1">
-            <GiftForm handleSubmit={handleSubmit} />
-          </div>
-
-          <div className="lg:col-span-2">
-            {
-              isLoading ? (
-                <div className="h-full flex items-center justify-center p-10 rounded-xl bg-purple-100 border border-purple-200">
-                  <p>Loading ...</p>
-                </div>
-              ) :
-              giftSuggestions?.length > 0 ? (
-                <>
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-gray-800">AI Gift Suggestions</h2>
-                    <Button
-                      onClick={handleRefresh}
-                      className="inline-flex items-center group"
-                      disabled={isLoading}
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      New Ideas
-                    </Button>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {giftSuggestions?.map((gift) => (
-                      <GiftCard
-                        key={gift.name}
-                        gift={gift}
-                      />
-                    ))}
-                  </div>
-                </>
-              ) : (
-              <div className="h-full flex items-center justify-center p-10 rounded-xl bg-purple-100 border border-purple-200">
-                <div className="text-center">
-                  <Gift className="h-16 w-16 text-purple-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-medium text-gray-700 mb-2">Looking for AI gift ideas?</h3>
-                  <p className="text-gray-500">
-                    Fill out the form with details about the recipient to get personalized AI gift suggestions.
-                  </p>
-                </div>
+    <main className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+      <div className="relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative pt-16 pb-8 sm:pt-24 sm:pb-16 lg:pt-32 lg:pb-28">
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-8">
+                <Gift className="h-16 w-16 text-purple-600 animate-float" />
               </div>
-            )}
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+                <span className="block">Find the Perfect Gift</span>
+                <span className="block text-purple-600 mt-2">with Gift Genius</span>
+              </h1>
+              <p className="mt-6 max-w-lg mx-auto text-lg text-gray-600 sm:max-w-2xl">
+                Let our AI help you discover thoughtful, personalized gifts that will bring joy to your loved ones.
+                No more endless searching. Get curated suggestions that match their interests perfectly.
+              </p>
+              <div className="mt-8 flex justify-center gap-4">
+                <Link href="/gift-finder">
+                  <Button className="inline-flex items-center justify-center gap-2 px-8 py-3 text-lg bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all">
+                    Start Finding Gifts
+                    <Gift className="h-5 w-5" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
 
-export default Index;
+      <div className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Why Choose Gift Genius?
+            </h2>
+            <p className="mt-4 text-lg text-gray-600">
+              Finding the perfect gift has never been easier
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="relative bg-white p-6 rounded-2xl border border-purple-100 hover:border-purple-200 shadow-sm hover:shadow-md transition-all"
+              >
+                <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-purple-50 rounded-full">
+                  {feature.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 text-center mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 text-center">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-purple-50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Ready to Find the Perfect Gift?
+            </h2>
+            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+              Join the happy gift-givers who have discovered the perfect presents for their loved ones.
+            </p>
+            <div className="mt-8">
+              <Link href="/gift-finder">
+                <Button className="inline-flex items-center justify-center gap-2 px-8 py-3 text-lg bg-purple-600 hover:bg-purple-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all">
+                  Get Started Now
+                  <Sparkles className="h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}

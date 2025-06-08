@@ -12,7 +12,7 @@ interface GiftCardProps {
 
 const GiftCard = ({ gift }: GiftCardProps) => {
   return (
-    <div className="overflow-hidden flex flex-col justify-between animate-pop bg-white border border-purple-200 hover:shadow-lg transition-shadow rounded-lg border shadow-sm">
+    <div className="overflow-hidden flex flex-col justify-between animate-pop bg-white border-purple-200 hover:shadow-lg transition-shadow rounded-lg border shadow-sm">
       <div className="aspect-[4/3] overflow-hidden relative">
         <img src={gift.imageUrl} alt={gift.name} className="w-full h-auto hover:scale-110" />
         {gift.category && (

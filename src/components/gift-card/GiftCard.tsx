@@ -1,10 +1,10 @@
 import { ExternalLink } from 'lucide-react';
-import { GiftIdea } from '@/_types/giftIdea';
 import { CardContent } from './CardContent';
 import { CardDescription } from './CardDescription';
 import { CardFooter } from './CardFooter';
 import { CardHeader } from './CardHeader';
 import { CardTitle } from './CardTitle';
+import { GiftIdea } from '@/types/giftIdea';
 
 interface GiftCardProps {
   gift: GiftIdea;

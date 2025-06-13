@@ -1,4 +1,4 @@
-import SignInForm from '@/_components/gift-card/auth/SignInForm';
+import SignInForm from '../../../components/auth/SignInForm';
 
 export default function SignInPage() {
   return <SignInForm />;

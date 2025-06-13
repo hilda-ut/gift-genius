@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { GiftIdea } from '@/_types/giftIdea';
+import { GiftIdea } from '@/types/giftIdea';
 
 export const getAIGiftSuggestions = async (
   age: string,

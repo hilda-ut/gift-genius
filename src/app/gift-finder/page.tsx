@@ -10,11 +10,11 @@ import {
   RefreshCw,
   TriangleAlert,
 } from 'lucide-react';
-import Button from '@/_components/ui/Button';
-import GiftCard from '@/_components/gift-card/GiftCard';
-import { GiftIdea } from '@/_types/giftIdea';
-import { getAIGiftSuggestions } from '@/_utils/aiGiftService';
-import { GiftForm } from '@/_components/gift-form/GiftForm';
+import Button from '@/components/ui/Button';
+import GiftCard from '@/components/gift-card/GiftCard';
+import { GiftIdea } from '@/types/giftIdea';
+import { getAIGiftSuggestions } from '@/lib/aiGiftService';
+import { GiftForm } from '@/components/gift-form/GiftForm';
 
 export default function GiftFinder() {
   const [giftSuggestions, setGiftSuggestions] = useState<GiftIdea[]>([]);

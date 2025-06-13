@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Clock, Gift, Heart, Sparkles, Target } from 'lucide-react';
-import Button from '@/_components/ui/Button';
+import Button from '@/components/ui/Button';
 
 const features = [
   {

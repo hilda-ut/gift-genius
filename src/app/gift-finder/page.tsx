@@ -84,7 +84,7 @@ export default function GiftFinder() {
             <Gift className="h-12 w-12 text-purple-400 animate-float" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
-            Gift Genius
+            Giftly
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Discover AI-powered gift suggestions for everyone in your life based on their age, interests, and your relationship.

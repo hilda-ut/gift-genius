@@ -39,7 +39,7 @@ export default function Home() {
               </div>
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block">Find the Perfect Gift</span>
-                <span className="block text-purple-600 mt-2">with Gift Genius</span>
+                <span className="block text-purple-600 mt-2">with Giftly</span>
               </h1>
               <p className="mt-6 max-w-lg mx-auto text-lg text-gray-600 sm:max-w-2xl">
                 Let our AI help you discover thoughtful, personalized gifts that will bring joy to your loved ones.
@@ -62,7 +62,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900">
-              Why Choose Gift Genius?
+              Why Choose Giftly?
             </h2>
             <p className="mt-4 text-lg text-gray-600">
               Finding the perfect gift has never been easier

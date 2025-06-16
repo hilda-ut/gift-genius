@@ -1,5 +1,10 @@
-import SignUpForm from '@/components/gift-card/auth/SignUpForm';
+import SignUpForm from '@components/auth/SignUpForm';
+import PageContainer from '@components/layout/PageContainer';
 
 export default function SignUpPage() {
-  return <SignUpForm />;
+  return (
+    <PageContainer classes="flex justify-center">
+      <SignUpForm />
+    </PageContainer>
+  );
 }

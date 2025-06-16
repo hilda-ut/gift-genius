@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { Gift } from 'lucide-react';
-import { Input } from '../ui/Input';
-import { Label } from '../ui/Label';
-import Button from '../ui/Button';
+import Label from '@components/ui/Label';
+import Input from '@components/ui/Input';
+import Button from '@components/ui/Button';
 
 export default function SignUpForm() {
   const [email, setEmail] = useState('');

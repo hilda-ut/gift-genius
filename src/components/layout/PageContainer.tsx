@@ -6,7 +6,7 @@ export default function PageContainer({
   classes?: string,
  }) {
   return (
-    <div className={`w-full px-4 py-8 sm:px-6 lg:px-8 ${classes}`}>
+    <div className={`w-full px-4 py-16 sm:px-6 lg:px-8 ${classes}`}>
       {children}
     </div>
   );

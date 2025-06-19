@@ -36,10 +36,8 @@ const eslintConfig = [
         'ignoreMemberSort': false,
         'memberSyntaxSortOrder': ['none', 'all', 'multiple', 'single'],
       }],
-      'no-unused-vars': ['warn', {
-        'argsIgnorePattern': '^_',
-        'varsIgnorePattern': '^_',
-      }],
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['error'],
       'no-console': ['warn', {
         'allow': ['warn', 'error'],
       }],

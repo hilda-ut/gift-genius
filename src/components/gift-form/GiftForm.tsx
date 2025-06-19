@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { Slider } from 'radix-ui';
 import { Gift } from 'lucide-react';
 import { relationships } from '@/lib/relationships';
-import { Input } from '../ui/Input';
-import { Label } from '../ui/Label';
+import Input from '../ui/Input';
+import Label from '../ui/Label';
 import Button from '../ui/Button';
 
 interface Props {

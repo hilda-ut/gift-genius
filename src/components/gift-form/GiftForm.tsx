@@ -1,9 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React,
+{
+  useEffect,
+  useState,
+} from 'react';
 import { Slider } from 'radix-ui';
 import { Gift } from 'lucide-react';
 import { relationships } from '@/lib/relationships';
+import { Country, mapToCountry } from '@/types/country';
 import Input from '../ui/Input';
 import Label from '../ui/Label';
 import Button from '../ui/Button';
@@ -13,7 +18,8 @@ interface Props {
     age: string,
     interests: string,
     relationship: string,
-    priceRange: number[]
+    priceRange: number[],
+    country: Country
   ) => void;
 }
 
@@ -24,10 +30,42 @@ export const GiftForm: React.FC<Props> = ({
   const [interests, setInterests] = useState('');
   const [relationship, setRelationship] = useState('');
   const [priceRange, setPriceRange] = useState<number[]>([20, 80]);
+  const [country, setCountry] = useState<Country>('US');
+
+  const getUserCountry = async (): Promise<Country> => {
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(
+        async ({ coords }) => {
+          try {
+            const response = await fetch(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${coords.latitude}&longitude=${coords.longitude}&localityLanguage=en`,
+            );
+            const data = await response.json();
+            const country = mapToCountry(data.countryName);
+            resolve(country);
+          } catch {
+            resolve('US');
+          }
+        },
+        () => resolve('US'),
+        { timeout: 5000 },
+      );
+    });
+  };
+
+  useEffect(() => {
+    getUserCountry().then(setCountry);
+  }, []);
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    handleSubmit(age, interests, relationship, priceRange);
+    handleSubmit(
+      age,
+      interests,
+      relationship,
+      priceRange,
+      country,
+    );
   };
 
   return (

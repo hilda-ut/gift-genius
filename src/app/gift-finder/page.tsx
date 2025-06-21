@@ -15,6 +15,7 @@ import GiftCard from '@/components/gift-card/GiftCard';
 import { GiftIdea } from '@/types/giftIdea';
 import { getAIGiftSuggestions } from '@/lib/aiGiftService';
 import { GiftForm } from '@/components/gift-form/GiftForm';
+import { Country } from '@/types/country';
 
 export default function GiftFinder() {
   const [giftSuggestions, setGiftSuggestions] = useState<GiftIdea[]>([]);
@@ -24,6 +25,7 @@ export default function GiftFinder() {
     interests: string;
     relationship: string;
     priceRange: number[];
+    country: Country;
   } | null>(null);
 
   const handleSubmit = async(
@@ -31,6 +33,7 @@ export default function GiftFinder() {
     interests: string,
     relationship: string,
     priceRange: number[],
+    country: Country,
   ): Promise<void> => {
     setIsLoading(true);
 
@@ -40,6 +43,7 @@ export default function GiftFinder() {
         interests,
         relationship,
         priceRange,
+        country,
       );
 
       setGiftSuggestions(suggestions);
@@ -48,6 +52,7 @@ export default function GiftFinder() {
         interests,
         relationship,
         priceRange,
+        country,
       });
     } catch (error) {
       console.error('Error getting gift suggestions:', error);
@@ -64,6 +69,7 @@ export default function GiftFinder() {
       criteria.interests,
       criteria.relationship,
       criteria.priceRange,
+      criteria.country,
     );
   };
 

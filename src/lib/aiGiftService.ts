@@ -1,11 +1,13 @@
 import { toast } from 'sonner';
 import { GiftIdea } from '@/types/giftIdea';
+import { Country, getAmazonDomain } from '@/types/country';
 
 export const getAIGiftSuggestions = async (
   age: string,
   interests: string,
   relationship: string,
   priceRange: number[] = [20, 80],
+  country: Country,
 ): Promise<GiftIdea[]> => {
   try {
     const prompt = `
@@ -65,10 +67,8 @@ export const getAIGiftSuggestions = async (
     let suggestions;
     try {
       const parsed = JSON.parse(content);
-      console.log('parsed', parsed);
       suggestions = Array.isArray(parsed) ? parsed : parsed.giftIdeas;
 
-      console.log('suggestions', suggestions);
     } catch (err) {
       console.error('Failed to parse AI response:', err);
       toast.error('Invalid response from AI');
@@ -78,13 +78,14 @@ export const getAIGiftSuggestions = async (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return suggestions.map((item: any, i: number) => {
       const name = item.name || `Gift Idea ${i + 1}`;
+      const amazonDomain = getAmazonDomain(country);
 
       const searchParams = new URLSearchParams({
         k: name,
         rh: `p_36:${priceRange[0]}00-${priceRange[1]}00`, // Price range in cents
       });
 
-      const productUrl = `https://www.amazon.com/s?${searchParams.toString()}`;
+      const productUrl = `https://www.${amazonDomain}/s?${searchParams.toString()}`;
 
       return {
         id: `item-number-${i}`,

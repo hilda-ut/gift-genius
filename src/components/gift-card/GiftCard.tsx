@@ -4,7 +4,7 @@ import { CardDescription } from './CardDescription';
 import { CardFooter } from './CardFooter';
 import { CardHeader } from './CardHeader';
 import { CardTitle } from './CardTitle';
-import { GiftIdea } from '@/types/giftIdea';
+import { GiftIdea } from '@types/gift-idea';
 
 interface GiftCardProps {
   gift: GiftIdea;

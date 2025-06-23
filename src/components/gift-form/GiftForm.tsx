@@ -8,7 +8,8 @@ import React,
 import { Slider } from 'radix-ui';
 import { Gift } from 'lucide-react';
 import { relationships } from '@/lib/relationships';
-import { Country, mapToCountry } from '@/types/country';
+import type { Country } from '@/types/country';
+import { mapToCountry } from '@/lib/country-name-map';
 import Input from '../ui/Input';
 import Label from '../ui/Label';
 import Button from '../ui/Button';

@@ -6,4 +6,4 @@ export interface GiftIdea {
   category: string;
   imageUrl: string;
   productUrl: string;
-}
+};

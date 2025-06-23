@@ -1,6 +1,8 @@
+import { Country } from '@/types/country';
+import { GiftIdea } from '@/types/gift-idea';
+import { getAmazonDomain } from '@lib/get-amazon-domain';
 import { toast } from 'sonner';
-import { GiftIdea } from '@/types/giftIdea';
-import { Country, getAmazonDomain } from '@/types/country';
+
 
 export const getAIGiftSuggestions = async (
   age: string,

@@ -1,4 +1,4 @@
-import type { Country } from "@types/country";
+import { Country } from '@/types/country';
 import { normalizeCountryName } from './normalize-country-name';
 
 export const mapToCountry = (countryName: string): Country => {

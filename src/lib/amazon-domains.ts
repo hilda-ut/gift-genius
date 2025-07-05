@@ -1,4 +1,4 @@
-import type { Country } from "@types/country";
+import { Country } from '@/types/country';
 
 export const AMAZON_DOMAINS: Record<Country, string> = {
   US: 'amazon.com',

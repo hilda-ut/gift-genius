@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Toaster } from 'sonner';
+import { toast, Toaster } from 'sonner';
 import {
   CircleCheckBig,
   Gift,
@@ -13,7 +13,6 @@ import {
 import Button from '@components/ui/Button';
 import GiftCard from '@components/gift-card/GiftCard';
 import { GiftForm } from '@components/gift-form/GiftForm';
-import { getAIGiftSuggestions } from '@lib/server/ai-gift-service';
 import { GiftIdea } from '@/types/gift-idea';
 import { Country } from '@/types/country';
 
@@ -28,7 +27,7 @@ export default function GiftFinder() {
     country: Country;
   } | null>(null);
 
-  const handleSubmit = async(
+  const handleSubmit = async (
     age: string,
     interests: string,
     relationship: string,
@@ -38,15 +37,29 @@ export default function GiftFinder() {
     setIsLoading(true);
 
     try {
-      const suggestions = await getAIGiftSuggestions(
-        age,
-        interests,
-        relationship,
-        priceRange,
-        country,
-      );
+      const response = await fetch('/api/gift-suggestions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          age,
+          interests,
+          relationship,
+          priceRange,
+          country,
+        }),
+      });
 
-      setGiftSuggestions(suggestions);
+      if (!response.ok) {
+        const errorData = await response.json();
+        const errorMessage = errorData.error || 'Failed to get gift suggestions';
+        toast.error(errorMessage);
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      setGiftSuggestions(data.suggestions);
       setCriteria({
         age,
         interests,
@@ -54,8 +67,15 @@ export default function GiftFinder() {
         priceRange,
         country,
       });
+
+      toast.success('Gift suggestions generated successfully!');
+
     } catch (error) {
       console.error('Error getting gift suggestions:', error);
+
+      if (error instanceof Error && !error.message.includes('Failed to get gift suggestions')) {
+        toast.error('Something went wrong. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }

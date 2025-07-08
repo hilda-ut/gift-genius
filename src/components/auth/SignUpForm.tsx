@@ -10,11 +10,32 @@ export default function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement sign up logic
-    console.log('Sign up:', { email, password });
+    // setError(null);
+    // setSuccess(false);
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    setLoading(false);
+
+    if (error) {
+      setError(error.message);
+    } else {
+      setSuccess(true);
+    }
   };
 
   return (
@@ -64,11 +85,12 @@ export default function SignUpForm() {
         <Button
           type="submit"
           className="w-full mt-8"
+          disabled={loading}
         >
-          Sign Up
+          {loading ? 'Signing Up...' : 'Sign Up'}
         </Button>
-
-
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        {success && <p className="text-green-600 text-sm mt-2">Check your email to confirm your account.</p>}
       </form>
       <p className="text-center text-sm text-gray-600 mt-4">
         Already have an account?{' '}

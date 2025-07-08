@@ -1,5 +1,5 @@
-import { getAmazonDomain } from '@lib/get-amazon-domain';
-import { getCategoryImageUrl } from '@lib/get-category-image';
+import { getAmazonDomain } from '@/utils/get-amazon-domain';
+import { getCategoryImageUrl } from '@/utils/get-category-image';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {

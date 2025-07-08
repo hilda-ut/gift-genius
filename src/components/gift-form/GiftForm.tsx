@@ -7,9 +7,9 @@ import React,
 } from 'react';
 import { Slider } from 'radix-ui';
 import { Gift } from 'lucide-react';
-import { relationships } from '@/lib/relationships';
+import { relationships } from '@/utils/relationships';
 import type { Country } from '@/types/country';
-import { mapToCountry } from '@/lib/country-name-map';
+import { mapToCountry } from '@/utils/country-name-map';
 import Input from '../ui/Input';
 import Label from '../ui/Label';
 import Button from '../ui/Button';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast, Toaster } from 'sonner';
 import {
   CircleCheckBig,
@@ -15,6 +15,10 @@ import GiftCard from '@components/gift-card/GiftCard';
 import { GiftForm } from '@components/gift-form/GiftForm';
 import { GiftIdea } from '@/types/gift-idea';
 import { Country } from '@/types/country';
+import {
+  getGuestSuggestionsCount,
+  incrementGuestSuggestionsCount,
+} from '@/utils/guest-usage';
 
 export default function GiftFinder() {
   const [giftSuggestions, setGiftSuggestions] = useState<GiftIdea[]>([]);
@@ -27,6 +31,17 @@ export default function GiftFinder() {
     country: Country;
   } | null>(null);
 
+  const [guestCount, setGuestCount] = useState(0);
+
+  // Placeholder for user auth (replace with your actual auth logic)
+  const user = null; // null = guest, otherwise user object
+
+  useEffect(() => {
+    if (!user) {
+      setGuestCount(getGuestSuggestionsCount());
+    }
+  }, [user]);
+
   const handleSubmit = async (
     age: string,
     interests: string,
@@ -34,6 +49,11 @@ export default function GiftFinder() {
     priceRange: number[],
     country: Country,
   ): Promise<void> => {
+    if (!user && guestCount >= 3) {
+      toast.error('You’ve reached your free limit. Create an account to continue.');
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -41,6 +61,7 @@ export default function GiftFinder() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-guest-suggestions-count': guestCount.toString(),
         },
         body: JSON.stringify({
           age,
@@ -50,14 +71,12 @@ export default function GiftFinder() {
           country,
         }),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         const errorMessage = errorData.error || 'Failed to get gift suggestions';
         toast.error(errorMessage);
         throw new Error(errorMessage);
       }
-
       const data = await response.json();
       setGiftSuggestions(data.suggestions);
       setCriteria({
@@ -67,12 +86,14 @@ export default function GiftFinder() {
         priceRange,
         country,
       });
-
+      // Increment guest count if not signed in
+      if (!user) {
+        const newCount = incrementGuestSuggestionsCount();
+        setGuestCount(newCount);
+      }
       toast.success('Gift suggestions generated successfully!');
-
     } catch (error) {
       console.error('Error getting gift suggestions:', error);
-
       if (error instanceof Error && !error.message.includes('Failed to get gift suggestions')) {
         toast.error('Something went wrong. Please try again.');
       }
@@ -83,7 +104,6 @@ export default function GiftFinder() {
 
   const handleRefresh = (): void => {
     if (!criteria) return;
-
     handleSubmit(
       criteria.age,
       criteria.interests,
@@ -116,12 +136,16 @@ export default function GiftFinder() {
             Discover AI-powered gift suggestions for everyone in your life based on their age, interests, and your relationship.
           </p>
         </div>
-
+        {/* Banner for guest limit */}
+        {!user && guestCount >= 3 && (
+          <div className="mb-6 p-4 bg-yellow-100 border border-yellow-300 text-yellow-800 rounded text-center font-medium">
+            You’ve used your 3 free suggestions. <a href="/sign-up" className="underline text-purple-700">Sign up</a> or <a href="/sign-in" className="underline text-purple-700">sign in</a> to get 5 more free suggestions!
+          </div>
+        )}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           <div className="lg:col-span-1">
-            <GiftForm handleSubmit={handleSubmit} />
+            <GiftForm handleSubmit={handleSubmit} disableSubmit={!user && guestCount >= 3} />
           </div>
-
           <div className="lg:col-span-2">
             {
               isLoading ? (

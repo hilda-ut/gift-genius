@@ -7,9 +7,10 @@ import { redirect } from 'next/navigation';
 export async function signup(formData: FormData) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
+  const data: {
+    email: string;
+    password: string;
+  } = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
   };

@@ -22,10 +22,12 @@ interface Props {
     priceRange: number[],
     country: Country
   ) => void;
+  disableSubmit?: boolean;
 }
 
 export const GiftForm: React.FC<Props> = ({
   handleSubmit,
+  disableSubmit = false,
 }: Props) => {
   const [age, setAge] = useState('');
   const [interests, setInterests] = useState('');
@@ -140,6 +142,7 @@ export const GiftForm: React.FC<Props> = ({
       <Button
         type="submit"
         className="w-full"
+        disabled={disableSubmit}
       >
         Get Gift Suggestions
       </Button>

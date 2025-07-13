@@ -1,6 +1,7 @@
 import { getAmazonDomain } from '@/utils/get-amazon-domain';
 import { getCategoryImageUrl } from '@/utils/get-category-image';
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient as createSupabaseClient } from '@/utils/supabse/server';
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,6 +12,44 @@ export async function POST(req: NextRequest) {
       priceRange = [20, 80],
       country,
     } = await req.json();
+
+    const supabase = await createSupabaseClient();
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    let isPremium = false;
+    let suggestionsCount = 0;
+
+    if (user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('suggestions_count, is_premium')
+        .eq('id', user.id)
+        .single();
+      if (profile) {
+        isPremium = profile.is_premium;
+        suggestionsCount = profile.suggestions_count;
+      }
+      if (!isPremium && suggestionsCount >= 8) {
+        return NextResponse.json({
+          error: 'limit',
+          message: 'You’ve discovered 8 thoughtful gift ideas. Unlock unlimited suggestions with Giftly Pro.',
+        }, { status: 403 });
+      }
+    } else {
+      // Guest user: check for x-guest-suggestions-count header
+      // This header should be set by the client and reflect the guest's local usage count
+      const guestCountHeader = req.headers.get('x-guest-suggestions-count');
+      const guestCount = guestCountHeader ? parseInt(guestCountHeader, 10) : 0;
+      if (guestCount >= 3) {
+        return NextResponse.json({
+          error: 'limit',
+          message: 'You’ve reached your free limit. Create an account to continue.',
+        }, { status: 403 });
+      }
+    }
 
     const prompt = `
       Suggest 6 gift ideas for a ${age} year old ${relationship} who likes ${interests}.
@@ -80,7 +119,7 @@ export async function POST(req: NextRequest) {
 
       const searchParams = new URLSearchParams({
         k: name,
-        rh: `p_36:${priceRange[0]}00-${priceRange[1]}00`, // Price range in cents
+        rh: `p_36:${priceRange[0]}00-${priceRange[1]}00`,
       });
 
       const productUrl = `https://www.${amazonDomain}/s?${searchParams.toString()}`;
@@ -95,6 +134,14 @@ export async function POST(req: NextRequest) {
         productUrl,
       };
     });
+
+    // Increment suggestions_count for signed-in, non-premium users
+    if (user && !isPremium) {
+      await supabase
+        .from('profiles')
+        .update({ suggestions_count: suggestionsCount + 1 })
+        .eq('id', user.id);
+    }
 
     return NextResponse.json({ suggestions: giftIdeas });
   } catch (err) {

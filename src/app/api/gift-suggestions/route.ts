@@ -97,8 +97,18 @@ export async function POST(req: NextRequest) {
     });
 
     if (!response.ok) {
-      console.error('OpenAI API error', await response.text());
-      return NextResponse.json({ error: 'AI request failed. Try again later.' }, { status: 500 });
+      const detail = await response.text();
+      console.error('[gift-suggestions] OpenAI error', response.status, detail);
+      let code;
+      try {
+        code = JSON.parse(detail)?.error?.code;
+      } catch {
+        code = undefined;
+      }
+      return NextResponse.json(
+        { error: 'AI request failed. Try again later.', code, status: response.status },
+        { status: 502 },
+      );
     }
 
     const json = await response.json();
@@ -146,7 +156,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ suggestions: giftIdeas });
   } catch (err) {
-    console.error('Unexpected error in getAIGiftSuggestions:', err);
-    return NextResponse.json({ error: 'Something went wrong.' }, { status: 500 });
+    console.error('[gift-suggestions] Unexpected error', err);
+    const detail = process.env.NODE_ENV === 'development' && err instanceof Error ? err.message : undefined;
+    return NextResponse.json({ error: 'Something went wrong.', detail }, { status: 500 });
   }
 }

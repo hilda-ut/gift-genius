@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
         "category": "Tech"
       }
 
-      Return a JSON array containing 6 items with these exact fields. Be specific with product names and brands.`;
+      Return a JSON object of the form { "giftIdeas": [ ... ] } containing 6 items with these exact fields. Be specific with product names and brands.`;
 
     const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_TOKEN;
 
@@ -85,7 +85,8 @@ export async function POST(req: NextRequest) {
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4o-mini',
+        response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: 'You are a helpful assistant that returns only JSON.' },
           { role: 'user', content: prompt },
